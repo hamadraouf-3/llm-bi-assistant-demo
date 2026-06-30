@@ -33,13 +33,21 @@ st.sidebar.info("This is the **cloud demo** (Groq free-tier API). For a 100% loc
                  "zero-API-key version where your data never leaves your machine, "
                  "see the [GitHub repo](https://github.com/hamadraouf-3/llm-bi-assistant).")
 
-api_key = st.sidebar.text_input(
-    "Groq API Key",
-    type="password",
-    value=os.environ.get("GROQ_API_KEY", ""),
-    help="Get a free key at console.groq.com/keys — no credit card required."
-)
-st.sidebar.caption("Your key is used only for this session and is never stored.")
+# Prefer a securely-stored key (Streamlit Secrets) so visitors can try the demo
+# without needing their own key. Falls back to manual entry if none is configured.
+preset_key = st.secrets.get("GROQ_API_KEY", "") if hasattr(st, "secrets") else ""
+
+if preset_key:
+    api_key = preset_key
+    st.sidebar.success("✅ Ready to chat — no setup needed for this demo.")
+else:
+    api_key = st.sidebar.text_input(
+        "Groq API Key",
+        type="password",
+        value=os.environ.get("GROQ_API_KEY", ""),
+        help="Get a free key at console.groq.com/keys — no credit card required."
+    )
+    st.sidebar.caption("Your key is used only for this session and is never stored.")
 
 st.sidebar.markdown("---")
 st.sidebar.subheader("📊 Dataset")
