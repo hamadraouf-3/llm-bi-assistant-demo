@@ -64,7 +64,7 @@ st.sidebar.caption("Built by Hamad Raouf · AI & Data Science Specialist")
 
 # ───────────────────────── HEADER ─────────────────────────
 st.title("💬 LLM-Powered Business Intelligence Assistant")
-st.caption("Ask business questions about sales data in plain English. Powered by a local LLM (Llama 3.2 via Ollama) + a safe, structured query layer (not free-form code execution).")
+st.caption("Ask business questions about sales data in plain English. Powered by a cloud LLM (Llama 3.3 via Groq) + a safe, structured query layer (not free-form code execution).")
 
 if not api_key:
     st.warning("👈 Enter a free Groq API key in the sidebar to start chatting. Get one at console.groq.com/keys (no credit card needed).")
