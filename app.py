@@ -252,11 +252,11 @@ def escape_dollars(text):
 
 
 # ───────────────────────── CHAT DISPLAY ─────────────────────────
-for msg in st.session_state.messages:
+for i, msg in enumerate(st.session_state.messages):
     with st.chat_message(msg["role"]):
         st.markdown(escape_dollars(msg["content"]))
         if msg.get("chart") is not None:
-            st.plotly_chart(msg["chart"], use_container_width=True)
+            st.plotly_chart(msg["chart"], use_container_width=True, key=f"chart_history_{i}")
         if msg.get("table") is not None:
             with st.expander("📋 View underlying data"):
                 st.dataframe(msg["table"], use_container_width=True)
@@ -287,7 +287,7 @@ if question:
                     table = result["data"] if result["result_type"] != "scalar" else None
 
                     if chart is not None:
-                        st.plotly_chart(chart, use_container_width=True)
+                        st.plotly_chart(chart, use_container_width=True, key=f"chart_new_{len(st.session_state.messages)}")
                     if table is not None:
                         with st.expander("📋 View underlying data"):
                             st.dataframe(table, use_container_width=True)
